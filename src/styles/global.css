@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+  --color-uleam-red: #ec3237;
+  --color-uleam-gray: #424242;
+  --color-fondo-base: #f5f6fa;
+}
