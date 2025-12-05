@@ -1,7 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import KpiCard from "../components/react/KpiCard";
 ---
 
 <Layout>
-	
+  <div class="grid grid-cols-4 gap-6 mt-8 mx-8">
+    <KpiCard title="Total Equipos" value="150" subtitle=""/>
+    <KpiCard title="Operativos" value="96" />
+    <KpiCard title="Mantenimiento" value="12" />
+    <KpiCard title="Dañados" value="42" />
+  </div>
 </Layout>
