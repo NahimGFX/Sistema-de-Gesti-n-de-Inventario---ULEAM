@@ -1,0 +1,10 @@
+---
+import LayoutForms from "../layouts/LayoutForms.astro";
+import LoginForm from "../components/react/LoginForm.jsx";
+---
+
+<LayoutForms>
+  <div class="flex justify-center items-center min-h-screen">
+    <LoginForm client:load/>
+  </div>
+</LayoutForms>

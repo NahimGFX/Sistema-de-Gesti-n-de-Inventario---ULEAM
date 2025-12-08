@@ -1,11 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import KpiCard from "../components/react/KpiCard";
+import Navbar from "../components/react/NavBar";
+import KpiCard from "../components/react/KpiCard.jsx";
 ---
 
 <Layout>
+  <Navbar client:load />
+
   <div class="grid grid-cols-4 gap-6 mt-8 mx-8">
-    <KpiCard title="Total Equipos" value="150" subtitle=""/>
+    <KpiCard title="Total Equipos" value="150" />
     <KpiCard title="Operativos" value="96" />
     <KpiCard title="Mantenimiento" value="12" />
     <KpiCard title="Dañados" value="42" />
