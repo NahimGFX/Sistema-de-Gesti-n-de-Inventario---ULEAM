@@ -5,3 +5,11 @@
   --color-uleam-gray: #424242;
   --color-fondo-base: #f5f6fa;
 }
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}

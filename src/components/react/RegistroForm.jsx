@@ -1,134 +1,68 @@
 import { useState } from "react";
-import Input from "./Input.jsx";
-import BotonEnviar from "./BotonEnviar.jsx";
-import LogoUleam from "../../assets/LogoUleam.png";
 
-export default function RegistroForm() {
-  // Estado de los campos
-  const [nombre, setNombre] = useState("");
-  const [cedula, setCedula] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [contrasena, setContrasena] = useState("");
-  const [confirmar, setConfirmar] = useState("");
+export default function EquipoForm({ onClose }) {
+  const [formData, setFormData] = useState({
+    codigo: "",
+    nombre: "",
+    categoria: "",
+    fecha: "",
+    responsable: "",
+    descripcion: "",
+    estado: "",
+  });
 
-  // Estado de errores
-  const [errores, setErrores] = useState({});
-
-  // Función para validar
-  const validar = () => {
-    const nuevoErrores = {};
-
-    // Nombre obligatorio
-    if (!/^[a-zA-Z\s]*$/.test(nombre)) nuevoErrores.nombre = "Nombre no válido";
-
-    // Cédula: máximo 10 dígitos y solo números
-    if (!/^\d{1,10}$/.test(cedula)) {
-      nuevoErrores.cedula = "Cedula no válida";
-    }
-
-    // Correo institucional
-    const correoRegex = new RegExp(`^e${cedula}@live\\.uleam\\.edu\\.ec$`);
-    if (!correoRegex.test(correo)) {
-      nuevoErrores.correo = "Correo no válido";
-    }
-
-    // Contraseña
-    if (!contrasena) nuevoErrores.contrasena = "La contraseña es obligatoria";
-
-    // Confirmar contraseña
-    if (contrasena !== confirmar) {
-      nuevoErrores.confirmar = "Las contraseñas no coinciden";
-    }
-
-    setErrores(nuevoErrores);
-
-    return Object.keys(nuevoErrores).length === 0; // True si no hay errores
+  const handleChange = (e) => {
+    setFormData({ 
+      ...formData, 
+      [e.target.name]: e.target.value 
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validar()) {
-      const datos = { nombre, cedula, correo, contrasena };
+    console.log("Equipo agregado:", formData);
 
-      alert("¡Registro correcto!");
-      console.log("Enviado: ", datos);
-
-      // Guardar en localStorage
-      const registros = JSON.parse(
-        localStorage.getItem("registrosUsuarios") || "[]"
-      );
-      registros.push(datos);
-      localStorage.setItem("registrosUsuarios", JSON.stringify(registros));
-
-      // Limpiar formulario
-      setNombre("");
-      setCedula("");
-      setCorreo("");
-      setContrasena("");
-      setConfirmar("");
-    }
+    // Aquí puedes enviar a tu backend o levantar evento
+    onClose();
   };
 
   return (
-    <div className="bg-white w-full max-w-md p-8 rounded-xl shadow-lg flex flex-col items-center">
-      <img src={LogoUleam.src} alt="Logo Uleam" className="w-60 mb-4" />
-      <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
-        Registro de Usuario
-      </h2>
+    <form onSubmit={handleSubmit}>
 
-      <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
-        <Input
-          label="Nombre Completo"
-          type="text"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-        />
-        {errores.nombre && (
-          <p className="text-uleam-red text-xs">{errores.nombre}</p>
-        )}
+      <h2 className="text-xl font-bold mb-4">Agregar Equipo</h2>
 
-        <Input
-          label="Número de Cédula"
-          type="text"
-          value={cedula}
-          onChange={(e) => setCedula(e.target.value)}
-        />
-        {errores.cedula && (
-          <p className="text-uleam-red text-xs">{errores.cedula}</p>
-        )}
+      <label>Código</label>
+      <input name="codigo" onChange={handleChange} className="input" />
 
-        <Input
-          label="Correo Institucional"
-          type="email"
-          value={correo}
-          onChange={(e) => setCorreo(e.target.value)}
-        />
-        {errores.correo && (
-          <p className="text-uleam-red text-xs">{errores.correo}</p>
-        )}
+      <label>Nombre</label>
+      <input name="nombre" onChange={handleChange} className="input" />
 
-        <Input
-          label="Contraseña"
-          type="password"
-          value={contrasena}
-          onChange={(e) => setContrasena(e.target.value)}
-        />
-        {errores.contrasena && (
-          <p className="text-uleam-red text-xs">{errores.contrasena}</p>
-        )}
+      <label>Categoría</label>
+      <input name="categoria" onChange={handleChange} className="input" />
 
-        <Input
-          label="Confirmar Contraseña"
-          type="password"
-          value={confirmar}
-          onChange={(e) => setConfirmar(e.target.value)}
-        />
-        {errores.confirmar && (
-          <p className="text-uleam-red text-xs">{errores.confirmar}</p>
-        )}
+      <label>Fecha</label>
+      <input name="fecha" type="date" onChange={handleChange} className="input" />
 
-        <BotonEnviar text="Registrar" />
-      </form>
-    </div>
+      <label>Responsable</label>
+      <input name="responsable" onChange={handleChange} className="input" />
+
+      <label>Descripción</label>
+      <textarea name="descripcion" onChange={handleChange} className="input" />
+
+      <label>Estado</label>
+      <select name="estado" onChange={handleChange} className="input">
+        <option value="">Seleccionar</option>
+        <option value="Operativo">Operativo</option>
+        <option value="Mantenimiento">Mantenimiento</option>
+        <option value="Dañado">Dañado</option>
+      </select>
+
+      <button
+        type="submit"
+        className="w-full bg-green-600 text-white py-2 rounded mt-4"
+      >
+        Guardar
+      </button>
+    </form>
   );
 }
