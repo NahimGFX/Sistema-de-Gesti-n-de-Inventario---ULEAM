@@ -9,6 +9,7 @@ export default function TablaEquipos() {
   const [busqueda, setBusqueda] = useState("");
   const [mostrarModal, setMostrarModal] = useState(false);
   const [equipos, setEquipos] = useState([]);
+  const [equipoEditando, setEquipoEditando] = useState(null);
 
   useEffect(() => {
     const datosGuardados = localStorage.getItem("equipos");
@@ -49,6 +50,16 @@ export default function TablaEquipos() {
     );
   };
 
+  const editarEquipo = (equipoActualizado) => {
+    setEquipos((prev) =>
+      prev.map((e) =>
+        e.codigo === equipoActualizado.codigo ? equipoActualizado : e
+      )
+    );
+    setEquipoEditando(null);
+    setMostrarModal(false);
+  };
+
   const agregarEquipo = (nuevoEquipo) => {
     setEquipos((prev) => [...prev, nuevoEquipo]);
     setMostrarModal(false);
@@ -79,14 +90,29 @@ export default function TablaEquipos() {
         onAgregar={() => setMostrarModal(true)}
       />
 
-      <Tabla equipos={equiposFiltrados} onCambiarEstado={cambiarEstado} />
+      <Tabla
+        equipos={equiposFiltrados}
+        onCambiarEstado={cambiarEstado}
+        onEditar={(equipo) => {
+          setEquipoEditando(equipo);
+          setMostrarModal(true);
+        }}
+      />
 
       {mostrarModal && (
-        <Modal onClose={() => setMostrarModal(false)}>
-          <h2 className="text-xl font-semibold mb-4">Agregar Equipo</h2>
+        <Modal
+          onClose={() => {
+            setMostrarModal(false);
+            setEquipoEditando(null);
+          }}
+        >
+          <h2 className="text-xl font-semibold mb-4">
+            {equipoEditando ? "Editar Equipo" : "Agregar Equipo"}
+          </h2>
+
           <EquipoForm
-            onAgregar={agregarEquipo}
-            onCancelar={() => setMostrarModal(false)}
+            equipoInicial={equipoEditando}
+            onAgregar={equipoEditando ? editarEquipo : agregarEquipo}
           />
         </Modal>
       )}

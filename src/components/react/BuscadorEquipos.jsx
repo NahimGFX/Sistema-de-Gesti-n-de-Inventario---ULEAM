@@ -12,7 +12,7 @@ export default function BuscadorEquipos({ onBuscar, onAgregar }) {
       <button
         onClick={onAgregar}
         
-        className="bg-uleam-red text-white px-4 py-2 rounded-md hover:opacity-90"
+        className="bg-uleam-red text-white px-4 py-2 rounded-md hover:opacity-90 transition cursor-pointer"
       >
         + Agregar Equipo
       </button>

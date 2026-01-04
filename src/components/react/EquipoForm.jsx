@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function EquipoForm({ onAgregar, equipoInicial }) {
+  const [errores, setErrores] = useState({});
   const [form, setForm] = useState({
     codigo: "",
     nombre: "",
@@ -22,15 +23,36 @@ export default function EquipoForm({ onAgregar, equipoInicial }) {
   }, [equipoInicial]);
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
+    setErrores({ ...errores, [e.target.name]: "" });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validar()) return;
+
     onAgregar(form);
+  };
+
+  //Validaciones
+  const validar = () => {
+    const nuevosErrores = {};
+
+    if (!form.codigo.trim()) nuevosErrores.codigo = "El código es obligatorio";
+    if (!form.nombre.trim()) nuevosErrores.nombre = "El nombre es obligatorio";
+    if (!form.categoria.trim())
+      nuevosErrores.categoria = "La categoría es obligatoria";
+    if (!form.fecha) nuevosErrores.fecha = "La fecha es obligatoria";
+    if (!form.responsable.trim())
+      nuevosErrores.responsable = "El responsable es obligatorio";
+    if (form.descripcion.trim().length < 10)
+      nuevosErrores.descripcion =
+        "La descripción debe tener al menos 10 caracteres";
+
+    setErrores(nuevosErrores);
+
+    return Object.keys(nuevosErrores).length === 0;
   };
 
   return (
@@ -38,42 +60,72 @@ export default function EquipoForm({ onAgregar, equipoInicial }) {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Grid principal */}
         <div className="grid grid-cols-2 gap-4">
-          <Input
-            label="Código"
-            name="codigo"
-            value={form.codigo}
-            onChange={handleChange}
-            disabled={editando}
-          />
+          {/* Código */}
+          <div className="flex flex-col">
+            <Input
+              label="Código"
+              name="codigo"
+              value={form.codigo}
+              onChange={handleChange}
+              disabled={editando}
+            />
+            <p className="min-h-4 text-xs text-red-500">
+              {errores.codigo || ""}
+            </p>
+          </div>
 
-          <Input
-            label="Nombre"
-            name="nombre"
-            value={form.nombre}
-            onChange={handleChange}
-          />
+          {/* Nombre */}
+          <div className="flex flex-col">
+            <Input
+              label="Nombre"
+              name="nombre"
+              value={form.nombre}
+              onChange={handleChange}
+            />
+            <p className="min-h-4 text-xs text-red-500">
+              {errores.nombre || ""}
+            </p>
+          </div>
 
-          <Input
-            label="Categoría"
-            name="categoria"
-            value={form.categoria}
-            onChange={handleChange}
-          />
+          {/* Categoría */}
+          <div className="flex flex-col">
+            <Input
+              label="Categoría"
+              name="categoria"
+              value={form.categoria}
+              onChange={handleChange}
+            />
+            <p className="min-h-4 text-xs text-red-500">
+              {errores.categoria || ""}
+            </p>
+          </div>
 
-          <Input
-            label="Fecha"
-            type="date"
-            name="fecha"
-            value={form.fecha}
-            onChange={handleChange}
-          />
+          {/* Fecha */}
+          <div className="flex flex-col">
+            <Input
+              label="Fecha"
+              type="date"
+              name="fecha"
+              value={form.fecha}
+              onChange={handleChange}
+            />
+            <p className="min-h-4 text-xs text-red-500">
+              {errores.fecha || ""}
+            </p>
+          </div>
 
-          <Input
-            label="Responsable"
-            name="responsable"
-            value={form.responsable}
-            onChange={handleChange}
-          />
+          {/* Responsable */}
+          <div className="flex flex-col">
+            <Input
+              label="Responsable"
+              name="responsable"
+              value={form.responsable}
+              onChange={handleChange}
+            />
+            <p className="min-h-4 text-xs text-red-500">
+              {errores.responsable || ""}
+            </p>
+          </div>
         </div>
 
         {/* Descripción */}
@@ -88,6 +140,9 @@ export default function EquipoForm({ onAgregar, equipoInicial }) {
             rows="3"
             className="mt-1 w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-uleam-red"
           />
+          {errores.descripcion && (
+            <p className="text-xs text-red-500">{errores.descripcion}</p>
+          )}
         </div>
 
         {/* Estado */}
