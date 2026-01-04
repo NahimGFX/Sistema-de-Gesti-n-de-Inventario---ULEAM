@@ -1,4 +1,4 @@
-export default function FilaEquipo({ equipo, onCambiarEstado}) {
+export default function FilaEquipo({ equipo, onCambiarEstado }) {
   return (
     <tr className="border-t border-neutral-200 hover:bg-gray-50 text-center">
       <td className="p-3">{equipo.codigo}</td>
@@ -10,10 +10,29 @@ export default function FilaEquipo({ equipo, onCambiarEstado}) {
       <td className="p-3 font-semibold">{equipo.estado}</td>
 
       <td className="p-3 flex gap-2 justify-center">
-        <button className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer">Editar</button>
-        <button onClick={() => onCambiarEstado(equipo.codigo, "Operativo")} className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer">Operativo</button>
-        <button onClick={() => onCambiarEstado(equipo.codigo, "Mantenimiento")} className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer">Mantenimiento</button>
-        <button onClick={() => onCambiarEstado(equipo.codigo, "Dañado")} className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer">Dañado</button>
+        <button
+          className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer"
+        >
+          Editar
+        </button>
+        <button
+          onClick={() => onCambiarEstado(equipo.codigo, "Operativo")}
+          className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer"
+        >
+          Operativo
+        </button>
+        <button
+          onClick={() => onCambiarEstado(equipo.codigo, "Mantenimiento")}
+          className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer"
+        >
+          Mantenimiento
+        </button>
+        <button
+          onClick={() => onCambiarEstado(equipo.codigo, "Dañado")}
+          className="text-white bg-uleam-gray px-2 py-1 rounded-md hover:bg-uleam-red transition cursor-pointer"
+        >
+          Dañado
+        </button>
       </td>
     </tr>
   );

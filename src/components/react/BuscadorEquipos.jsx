@@ -1,6 +1,6 @@
-export default function BuscadorEquipos({ onBuscar }) {
+export default function BuscadorEquipos({ onBuscar, onAgregar }) {
   return (
-    <div className="flex justify-between items-center mb-6">
+    <div className="flex justify-between items-center mb-4">
       <input
         type="text"
         placeholder="Buscar equipo..."
@@ -10,8 +10,9 @@ export default function BuscadorEquipos({ onBuscar }) {
       />
 
       <button
-        className="bg-uleam-red text-white px-5 py-2 rounded-lg font-semibold
-                   hover:bg-red-700 transition"
+        onClick={onAgregar}
+        
+        className="bg-uleam-red text-white px-4 py-2 rounded-md hover:opacity-90"
       >
         + Agregar Equipo
       </button>
